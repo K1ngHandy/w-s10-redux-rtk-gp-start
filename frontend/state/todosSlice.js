@@ -14,6 +14,14 @@ export const todosSlice = createSlice({
 		showCompletedTodos: true,
 	},
 	reducers: {
+		createNewTodo: {
+			prepare(label, complete) {
+				return { payload: { id: getNextId(), label, complete } };
+			},
+			reducer(state, action) {
+				state.todos.push(action.payload);
+			},
+		},
 		toggleTodo: (state, action) => {
 			let todo = state.todos.find((td) => td.id === action.payload);
 			todo.complete = !todo.complete;
@@ -24,6 +32,7 @@ export const todosSlice = createSlice({
 	},
 });
 
-export const { toggleTodo, toggleShowCompletedTodos } = todosSlice.actions;
+export const { createNewTodo, toggleTodo, toggleShowCompletedTodos } =
+	todosSlice.actions;
 
 export default todosSlice.reducer;
